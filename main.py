@@ -53,7 +53,8 @@ def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
     return seznam_skatel
 
 def prikazi_skatle(slika, seznam_skatel, sirina_skatle, visina_skatle):
-    return
+    for (x, y), stevilo_pikslov_koze in seznam_skatel:
+        cv2.rectangle(slika, (x, y), (x + sirina_skatle, y + visina_skatle), (0, 255, 0), 2)
 
 def prestej_piksle_z_barvo_koze(slika, barva_koze):
     #prejme posamezno skatlo in presteje piksle ki so znotraj barve koze
