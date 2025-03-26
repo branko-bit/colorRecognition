@@ -37,7 +37,20 @@ def zmanjsaj_sliko(slika, sirina, visina):
     return cv2.resize(slika, (sirina, visina))
 
 def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
-    return
+    visina, sirina = slika.shape[:2]
+    seznam_skatel = []
+    #gre cez vsako skatlo na sliki in klice prestej_piksle_z_barvo_koze() za vsako skatlo
+    for y in range(0, visina, visina_skatle):
+        for x in range(0, sirina, sirina_skatle):
+            skatla = slika[y:y + visina_skatle, x:x + sirina_skatle]
+            stevilo_pikslov_koze = prestej_piksle_z_barvo_koze(skatla, barva_koze)
+            skupno_stevilo_pikslov = skatla.shape[0] * skatla.shape[1] #visina*sirina
+            odstotek_koze = stevilo_pikslov_koze / skupno_stevilo_pikslov
+
+            if odstotek_koze >= 0.7:
+                seznam_skatel.append(((x, y), stevilo_pikslov_koze))
+
+    return seznam_skatel
 
 def prikazi_skatle(slika, seznam_skatel, sirina_skatle, visina_skatle):
     return
