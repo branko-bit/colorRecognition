@@ -10,7 +10,16 @@ def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
     #doloci najpogostejso barvo
     najpogostejse_barve = Counter(map(tuple, barve))#zato gre v map ker counter nemore prebrati numpy arraya
     najpogostejsa_barva = najpogostejse_barve.most_common(1)[0][0]#[0]da nedobim vsega sam barvo
+
+    #upostevanje tolerance
+    toleranca = np.array([20, 20, 20])
+    spodnja_meja = np.array(najpogostejsa_barva) - toleranca
+    zgornja_meja = np.array(najpogostejsa_barva) + toleranca
     
+    #preprica se da so barve znotraj pravih mej
+    spodnja_meja = np.clip(spodnja_meja, 0, 255)
+    zgornja_meja = np.clip(zgornja_meja, 0, 255)
+
     return
 
 def zmanjsaj_sliko(slika, sirina, visina):
