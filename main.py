@@ -22,13 +22,7 @@ def zajemi_kalibracijsko_sliko(sirina_kamere, visina_kamere, levo_zg_x, levo_zg_
     kamera = cv2.VideoCapture(0)
     kamera.set(cv2.CAP_PROP_FRAME_WIDTH, sirina_kamere)
     kamera.set(cv2.CAP_PROP_FRAME_HEIGHT, visina_kamere)
-
-    #testno izpisovanje da vidim kaksne so dejanske dimenzije...ker ce mi jih kamera ne podpira gre na neke default nastavitve
-    actual_width = int(kamera.get(cv2.CAP_PROP_FRAME_WIDTH))
-    actual_height = int(kamera.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    print("Širina: ", actual_width)
-    print("Višina: ", actual_height)
-
+    
     while True:
         ret, okvir = kamera.read()
         if not ret:
