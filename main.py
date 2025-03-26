@@ -20,7 +20,18 @@ def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
     spodnja_meja = np.clip(spodnja_meja, 0, 255)
     zgornja_meja = np.clip(zgornja_meja, 0, 255)
 
-    return
+    #tu imam testno samo da vidim katere barve so bile zaznane
+    def prikazi_barvo(barva, ime_okna):
+        barva_slike = np.zeros((100, 100, 3), dtype=np.uint8) #100x100 + BGR
+        barva_slike[:] = barva #vse piksle nastavi
+        cv2.imshow(ime_okna, barva_slike)
+    
+    prikazi_barvo(spodnja_meja, 'Spodnja meja')
+    prikazi_barvo(zgornja_meja, 'Zgornja meja')
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    return (spodnja_meja, zgornja_meja)
 
 def zmanjsaj_sliko(slika, sirina, visina):
     return
