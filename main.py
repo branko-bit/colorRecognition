@@ -34,7 +34,7 @@ def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
     return (spodnja_meja, zgornja_meja)
 
 def zmanjsaj_sliko(slika, sirina, visina):
-    return
+    return cv2.resize(slika, (sirina, visina))
 
 def obdelaj_sliko_s_skatlami(slika, sirina_skatle, visina_skatle, barva_koze):
     return
