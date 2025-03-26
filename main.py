@@ -101,7 +101,37 @@ def main():
         print("Slika ni bila zajeta.")
         return
 
-    return
+    kamera = cv2.VideoCapture(0)
+    kamera.set(cv2.CAP_PROP_FRAME_WIDTH, sirina_kamere)
+    kamera.set(cv2.CAP_PROP_FRAME_HEIGHT, visina_kamere)
+
+    frame_count = 0
+    start_time = time.time()
+
+    while True:
+        ret, okvir = kamera.read()
+        if not ret:
+            break
+
+        #okvir = zmanjsaj_sliko(okvir, 220, 340)
+
+        frame_count += 1
+        end_time = time.time()
+        fps = frame_count / (end_time - start_time)
+
+        okvir = cv2.flip(okvir, 1)
+        seznam_skatel = obdelaj_sliko_s_skatlami(okvir, sirina_skatle, visina_skatle, barva_koze)
+
+        #stetje fpsa
+        cv2.putText(okvir, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+
+        cv2.imshow('Kamera', okvir)
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    kamera.release()
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()
