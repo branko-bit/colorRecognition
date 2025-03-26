@@ -56,7 +56,11 @@ def prikazi_skatle(slika, seznam_skatel, sirina_skatle, visina_skatle):
     return
 
 def prestej_piksle_z_barvo_koze(slika, barva_koze):
-    return
+    #prejme posamezno skatlo in presteje piksle ki so znotraj barve koze
+    spodnja_meja, zgornja_meja = barva_koze
+    maska = cv2.inRange(slika, spodnja_meja, zgornja_meja) #use piksle zntori mej da na 255 ostale na 0
+    stevilo_pikslov_koze = cv2.countNonZero(maska)
+    return stevilo_pikslov_koze
 
 def zajemi_kalibracijsko_sliko(sirina_kamere, visina_kamere, levo_zg_x, levo_zg_y, desno_sp_x, desno_sp_y):
     kamera = cv2.VideoCapture(0)
