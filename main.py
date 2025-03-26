@@ -126,6 +126,7 @@ def main():
 
         okvir = cv2.flip(okvir, 1)
         seznam_skatel = obdelaj_sliko_s_skatlami(okvir, sirina_skatle, visina_skatle, barva_koze)
+        prikazi_skatle(okvir, seznam_skatel, sirina_skatle, visina_skatle)
 
         #stetje fpsa
         cv2.putText(okvir, f"FPS: {fps:.2f}", (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
