@@ -4,7 +4,34 @@ import time
 from collections import Counter
 
 def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
-    return
+    obraz = slika[levo_zgoraj[1]:desno_spodaj[1], levo_zgoraj[0]:desno_spodaj[0]]
+    barve = obraz.reshape(-1, 3)#visina*sirina*3
+    
+    #doloci najpogostejso barvo
+    najpogostejse_barve = Counter(map(tuple, barve))#zato gre v map ker counter nemore prebrati numpy arraya
+    najpogostejsa_barva = najpogostejse_barve.most_common(1)[0][0]#[0]da nedobim vsega sam barvo
+
+    #upostevanje tolerance
+    toleranca = np.array([20, 20, 20])
+    spodnja_meja = np.array(najpogostejsa_barva) - toleranca
+    zgornja_meja = np.array(najpogostejsa_barva) + toleranca
+    
+    #preprica se da so barve znotraj pravih mej
+    spodnja_meja = np.clip(spodnja_meja, 0, 255)
+    zgornja_meja = np.clip(zgornja_meja, 0, 255)
+
+    #tu imam testno samo da vidim katere barve so bile zaznane
+    def prikazi_barvo(barva, ime_okna):
+        barva_slike = np.zeros((100, 100, 3), dtype=np.uint8) #100x100 + BGR
+        barva_slike[:] = barva #vse piksle nastavi
+        cv2.imshow(ime_okna, barva_slike)
+    
+    prikazi_barvo(spodnja_meja, 'Spodnja meja')
+    prikazi_barvo(zgornja_meja, 'Zgornja meja')
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    return (spodnja_meja, zgornja_meja)
 
 def zmanjsaj_sliko(slika, sirina, visina):
     return
@@ -54,6 +81,13 @@ def main():
     sirina_skatle, visina_skatle = int(sirina_kamere/20), int(visina_kamere/20)
 
     slika = zajemi_kalibracijsko_sliko(sirina_kamere, visina_kamere, levo_zgoraj[0], levo_zgoraj[1], desno_spodaj[0], desno_spodaj[1])
+
+    if slika is not None:
+        barva_koze = doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj)
+    else:
+        print("Slika ni bila zajeta.")
+        return
+
     return
 
 if __name__ == "__main__":
