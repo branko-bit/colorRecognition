@@ -4,6 +4,13 @@ import time
 from collections import Counter
 
 def doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj):
+    obraz = slika[levo_zgoraj[1]:desno_spodaj[1], levo_zgoraj[0]:desno_spodaj[0]]
+    barve = obraz.reshape(-1, 3)#visina*sirina*3
+    
+    #doloci najpogostejso barvo
+    najpogostejse_barve = Counter(map(tuple, barve))#zato gre v map ker counter nemore prebrati numpy arraya
+    najpogostejsa_barva = najpogostejse_barve.most_common(1)[0][0]#[0]da nedobim vsega sam barvo
+    
     return
 
 def zmanjsaj_sliko(slika, sirina, visina):
@@ -54,6 +61,13 @@ def main():
     sirina_skatle, visina_skatle = int(sirina_kamere/20), int(visina_kamere/20)
 
     slika = zajemi_kalibracijsko_sliko(sirina_kamere, visina_kamere, levo_zgoraj[0], levo_zgoraj[1], desno_spodaj[0], desno_spodaj[1])
+
+    if slika is not None:
+        barva_koze = doloci_barvo_koze(slika, levo_zgoraj, desno_spodaj)
+    else:
+        print("Slika ni bila zajeta.")
+        return
+
     return
 
 if __name__ == "__main__":
