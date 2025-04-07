@@ -92,6 +92,8 @@ def zajemi_kalibracijsko_sliko(sirina_kamere, visina_kamere, levo_zg_x, levo_zg_
     
     return zajeta_slika
 
+#test
+
 def main():
     sirina_kamere, visina_kamere = 640, 480
     levo_zgoraj = [int(sirina_kamere / 5)*2, int(visina_kamere / 7)*2]
